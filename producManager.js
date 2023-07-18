@@ -38,6 +38,14 @@ productManager.getProducts()={
     }
 }
 
-productManager.getProductById(id)={
-    let 
+productManager.getProductById= function(id){
+    const searchProduct=productManager.find(product.id==id);
+    return searchProduct;
+    if(searchProduct==true){
+        console.log(this.product);
+    } 
+    else{
+        console.log('Error: Not found');
+    }
 }
+
