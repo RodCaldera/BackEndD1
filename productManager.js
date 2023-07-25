@@ -1,3 +1,5 @@
+
+// Agregar correcciones del tutor
 alert('¡Vamos a empezar!')
 let productManager=[];
 class product{
@@ -59,3 +61,5 @@ const newProduct= new product('producto de prueba','Este es un producto de prueb
 
 productManager.addProduct(newProduct.title, newProduct.description, newProduct.price, newProduct.thumbnail, newProduct.code, newProduct.stock)
 productManager.getProducts();
+
+//Agregar segunda entrega
