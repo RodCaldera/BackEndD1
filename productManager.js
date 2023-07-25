@@ -1,65 +1,54 @@
 
-// Agregar correcciones del tutor
+
 alert('¡Vamos a empezar!')
-let productManager=[];
 class product{
-    constructor(title, description, price, thumbnail, code, stock){
-        this.title=title;
-        this.description=description;
-        this.price=price;
-        this.thumbnail=thumbnail;
-        this.code=code;
-        this.stock=stock;
-        this.id=product.newId();
+    constructor(){
+        this.product=[];
+        this.id=0
     }
-    static lastId=0;
+    
+    addProduct(newProduct){
+        const {title, description, price, thumbnail, code, stock} = newProduct;
+        if(!title || !description || !price || !thumbnail || !code || !stock){
+            console.log('Error: product is incomplete');
+        }
 
-    static newId(){
-        product.lastId ++;
-        return product.lastId;
+        const codeExists = this.product.find( prod => prod.code === code );
+        if(codeExists) throw new Error('Code already exists')
+
+        newProduct.id=this.id++;
+        this.product.push(newProduct);
+        console.log('New product has been added:', title)
+
     }
-}
 
-productManager.addProduct= function (title, description, price,thumbnail,code, stock){
-    const newProduct= new product(title, description, price,thumbnail,code, stock)
-    if(!title || !description || !price || !thumbnail || !code || !stock){
-        console.log('Error: product is incomplete');
+    getProducts(){
+        return this.product
     }
-    else if (productManager.includes(this.code)){
-        console.log('Error: the code already exists');
+
+    getProductById(id){
+        const findProduct = this.product.find(find=> product.id === id)
+        if (findProduct==true){
+            return findProduct
+        } 
+        else {
+            throw new Error ('Product not found')
+        }         
     }
-    else{
-        productManager.push(newProduct);
-    }
-}
+}        
 
-productManager.getProducts= function(){
-    productManager.forEach((product)=>{
-        console.log(product.title);
-        console.log(product.description);
-        console.log(product.price);
-        console.log(product.thumbnail);
-        console.log(product.code);
-        console.log(product.stock);
-        console.log(product.id);
-    });
-}
 
-productManager.getProductById= function(id){
-    const searchProduct=productManager.find((product)=>product.id===id);
-    if(searchProduct==true){
-        console.log(searchProduct);
-    } 
-    else{
-        console.log('Error: Not found');
-    }
-}
+const newProduct= new product();
+const showProducts= newProduct.getProducts()
+console.log('Product List:', showProducts)    
 
-productManager.getProducts();
+newProduct.addProduct({title:"Producto de Prueba", description: "Prueba", price: 200, thumbnail:"Sin Imagen", code: "abc123", stock: 25})
 
-const newProduct= new product('producto de prueba','Este es un producto de prueba',200,"sin imagen","abc123",25);
+console.log('Product List:', showProducts)
 
-productManager.addProduct(newProduct.title, newProduct.description, newProduct.price, newProduct.thumbnail, newProduct.code, newProduct.stock)
-productManager.getProducts();
+newProduct.getProductById(1)
+console.log('Product found:', newProduct)
 
+newProduct.getProductById(4)
+console.log('Product found:', newProduct)
 //Agregar segunda entrega
