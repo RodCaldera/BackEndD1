@@ -1,4 +1,9 @@
 
+//Se agregó File System
+
+const fs= require(fs);
+
+//Primer Código Actualizado
 
 alert('¡Vamos a empezar!')
 class product{
@@ -51,4 +56,5 @@ console.log('Product found:', newProduct)
 
 newProduct.getProductById(4)
 console.log('Product found:', newProduct)
+
 //Agregar segunda entrega
