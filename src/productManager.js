@@ -1,9 +1,8 @@
-
-const express = require("express")
-const fs= require("fs")
+import express from "express";
+import { writeFileSync, promises, fileExistsSync, readFileSync, existsSync } from "fs";
 
 //Creamos el archivo
-fs.writeFileSync('products.json')     
+writeFileSync('products.json')     
 
 //Primer Código Actualizado
 
@@ -30,21 +29,21 @@ class product{
 
         //El producto va al archivo
         let stringifiedProduct= JSON.stringify(newProduct, undefined, 2)
-        await fs.promises.writeFile(this.path, stringifiedProduct,'utf-8')
+        await promises.writeFile(this.path, stringifiedProduct,'utf-8')
     }
 
     async getProducts(){
-        let products =JSON.parse(await fs.promises.readFile(this.path, 'utf-8'))
+        let products =JSON.parse(await promises.readFile(this.path, 'utf-8'))
         return (products)
         console.log(products)   
     }
 
     async getProductById(id){
         const checkFile= 
-            fs.fileExistsSync(this.path)
+            fileExistsSync(this.path)
                 if (!checkFile) throw new Error ('File not found')
 
-        const productFile=  fs.readFileSync(this.path)
+        const productFile=  readFileSync(this.path)
         const productList= JSON.parse(productFile, "utf-8") 
         const findProduct= productList.find((prod)=> prod.id === id)
         if (!findProduct) throw new Error (`ID: ${id} not found`)         
@@ -53,13 +52,13 @@ class product{
         }
 
     async deleteProduct(id) {
-        const checkFile= fs.existsSync(this.path)
+        const checkFile= existsSync(this.path)
             if (!checkFile) throw new Error ('Product file not found')
-        const productFile= fs.readFileSync(this.path)
+        const productFile= readFileSync(this.path)
         const productList= JSON.parse(productFile,"utf-8")
         const productFiltered= productList.filter((prod)=>prod !==id)
         if (!productFiltered) throw new Error (`ID: ${id} not found`)
-        await fs.writeFileSync(this.path,JSON.stringify(productFiltered))      
+        await writeFileSync(this.path,JSON.stringify(productFiltered))      
     }
 
    async updateProduct(id){
@@ -67,9 +66,9 @@ class product{
         if(!title || !description || !price || !thumbnail || !code || !stock){
             console.log('Error: product is incomplete');
         }
-        const checkFile= fs.existsSync(this.path)
+        const checkFile= existsSync(this.path)
             if (!checkFile) throw new Error ('Product file not found')
-        const productFile= fs.readFileSync(this.path)
+        const productFile= readFileSync(this.path)
         const productList= JSON.parse(productFile,"utf-8")
         const findProduct= productList.find((prod)=> prod.id === id)
         if (!findProduct) throw new Error (`ID: ${id} not found`)
@@ -80,11 +79,13 @@ class product{
         findProduct.code=newProduct.code;
         findProduct.stock=newProduct.stock;
         
-        await fs.writeFileSync(this.path, JSON.stringify(productList))
+        await writeFileSync(this.path, JSON.stringify(productList))
         
     }
     }
-    
+ 
+export{getProducts, getProductById}
+
 const newProduct= new product();
 const showProducts= newProduct.getProducts()
 console.log('Product List:', showProducts)    

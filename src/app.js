@@ -1,6 +1,6 @@
-import express from 'express'
-require ('productManager.js')
+const express= require('express')
 const app = express()
+import {getProducts, getProductById} from "productmanager.js"
 app.get('/products', (request, response)=>{
-    response.send('products.json')
-}
+    response.send(getProducts)})
+app.listen(8080)
